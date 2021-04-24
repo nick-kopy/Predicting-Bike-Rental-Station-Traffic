@@ -80,7 +80,7 @@ def grab_data(region=None):
     df['date'] = pd.to_datetime(df['ended_at']).dt.date
     df['hour'] = df['ended_at'].dt.hour
 
-    # For some reason each month has a few trips from the upcoming month
+    # For some reason each month has a extra few trips from the upcoming month
     # removed to prevent data leakage
     df = df[df['date'] < pd.to_datetime('2021-04-01')]
 
@@ -136,7 +136,7 @@ def vectorize(inputdf, return_scaler=False):
 
     out = out.reset_index(drop=True)
 
-    # If you don't want scaled data, use this return and comment out below it
+    # If you don't want scaled data, use this return line and comment out below it
     #return np.array(out)
 
     y = np.array(out.iloc[:, -1])
@@ -149,3 +149,39 @@ def vectorize(inputdf, return_scaler=False):
       return np.append(out, y.reshape(-1, 1), axis=1)
     else:
       return np.append(out, y.reshape(-1, 1), axis=1), scaler
+
+def windowize_data(data, n_prev, univariate=False):
+    '''Function to add a dimension of past data points to a numpy array
+
+    input: 2D np array
+
+    output: 3d np array (where 3D dimension is just copies of previous rows)
+
+    Adapted from a function by Michelle Hoogenhout:
+    https://github.com/michellehoog
+    '''
+    n_predictions = len(data) - n_prev
+    indices = np.arange(n_prev) + np.arange(n_predictions)[:, None]
+
+    if univariate == False:
+        y = data[n_prev:, -1]
+        x = data[indices]
+    else:
+        y = data[n_prev:]
+        x = data[indices, None]
+    return x, y
+
+def split_and_windowize(data, n_prev, fraction_test=0.1, univariate=False):
+    '''Train/test splits data with added timestep dimension
+
+    Adapted from a function by Michelle Hoogenhout:
+    https://github.com/michellehoog
+    '''
+    n_predictions = len(data) - 2*n_prev
+
+    n_test  = int(fraction_test * n_predictions)
+    n_train = n_predictions - n_test
+
+    x_train, y_train = windowize_data(data[:n_train], n_prev, univariate=univariate)
+    x_test, y_test = windowize_data(data[n_train:], n_prev, univariate=univariate)
+    return x_train, x_test, y_train, y_test
