@@ -6,12 +6,12 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import pickle
 
 from geopy.distance import geodesic
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
+
+plt.style.use('ggplot')
 
 def basic_dist(row):
     '''Gives a basic euclidean trip distance in meters'''
@@ -25,7 +25,7 @@ def basic_dist(row):
 
     return geodesic(a, b).km * 1000
 
-def grab_data(region=None):
+def station_data(region, eda=False, start_end=None):
     '''Loads, preps, and filters data for machine learning
 
     input: a set of strings, all station names
@@ -34,6 +34,11 @@ def grab_data(region=None):
       - Output is not quite AI ready or EDA ready, but right where they would branch
 
     '''
+    # grab a set of station names for a given region
+    if region in ['downtown', 'lincoln_park', 'wicker_park', 'hyde_park', 'uptown', 'chinatown']:
+        stations = get_stations(region)
+    else:
+        stations = set([region])
 
     # Gather one years worth of data
     filelist = []
@@ -47,17 +52,21 @@ def grab_data(region=None):
     usecols = ['started_at', 'ended_at', 'start_station_name', 'end_station_name', 'member_casual', 'rideable_type',
                'start_lat', 'start_lng', 'end_lat', 'end_lng']
 
+    # actually grab the data
     for month in filelist:
         lil_df = pd.read_csv(month, usecols=usecols)
 
-        # If you want all the data, just leave region=None
-        if region is not None:
-            # filter out what isn't in our region
-            mask1 = (lil_df['end_station_name'].isin(region))
-            mask2 = (lil_df['start_station_name'].isin(region))
+        # decide weather to look at trips starting and/or ending in our selected region
+        if start_end == 'end':
+            mask = (lil_df['end_station_name'].isin(stations))
+        if start_end == 'start':
+            mask = (lil_df['start_station_name'].isin(stations))
+        else:
+            mask1 = (lil_df['end_station_name'].isin(stations))
+            mask2 = (lil_df['start_station_name'].isin(stations))
             mask = mask1 | mask2
 
-            lil_df = lil_df[mask]
+        lil_df = lil_df[mask]
 
         frames.append(lil_df)
 
@@ -84,13 +93,23 @@ def grab_data(region=None):
     # removed to prevent data leakage
     df = df[df['date'] < pd.to_datetime('2021-04-01')]
 
+    # Future implementation can include weather data
+    #weather = grab_weather()
+    #df = df.merge(weather, how='left', left_on=['date', 'hour'], right_on=['date', 'hour'])
+
+    # AI wouldn't have following aggregate features available for predictions, so they aren't included in modeling
+    if eda == False:
+        # instead prep for machine learning
+        return vectorize(df)
+
+    # Extracting some interesting features for EDA
+
     # daylight savings makes a few negative trip times, a quick approximate fix is okay
     df['trip_time'] = abs((df['ended_at'] - df['started_at']).dt.total_seconds())
 
     # All trips above 10,800 seconds (3 hrs) are on Nov 25, must be some systemic thing
     df = df[df['trip_time'] < 10800]
 
-    # Extracting some interesting features
     df['round_trip'] = df.apply(lambda x: 1 if x['start_station_name'] == x['end_station_name'] else 0, axis=1)
 
     df['electric'] = df['rideable_type'].apply(lambda x: 1 if x == 'electric_bike' else 0)
@@ -99,89 +118,237 @@ def grab_data(region=None):
 
     df['trip_dist'] = df.apply(basic_dist, axis=1)
 
-    # only return what we need
-    dropcols = ['rideable_type', 'member_casual', 'started_at', 'ended_at',
-                'start_lat', 'start_lng', 'end_lat', 'end_lng']
-
-    if region is not None:
-        dropcols.append('start_station_name')
-        dropcols.append('end_station_name')
+    dropcols = ['rideable_type', 'member_casual', 'started_at', 'ended_at', 'start_lat', 'start_lng',
+                'end_lat', 'end_lng', 'start_station_name',  'end_station_name']
 
     df = df.drop(columns=dropcols)
 
-    return df
+    # extract target and add to output
+    out = df.groupby(['date', 'hour']).agg('mean')
 
-def vectorize(inputdf, return_scaler=False):
-    '''Prepares data for machine learning
+    out['target'] = df.groupby(['date', 'hour']).size()
 
-    input: df from grab_data
-
-    output: 2D numpy array
-      - all non-target feature columns are scaled
-    '''
-
-    out = inputdf.groupby(['date', 'hour']).agg('mean')
-
-    out['size'] = inputdf.groupby(['date', 'hour']).size()
-
+    # Some hours are missing, we want to include a row for that hour with target = 0
     dti = pd.Series(pd.date_range("2020-04-01", freq="D", periods=365)).dt.date
 
     idx = pd.MultiIndex.from_product([dti, np.arange(24)], names=['date', 'hour'])
 
-    df_blank = pd.DataFrame(data = np.zeros(shape=(365*24, 6)), index=idx,
-                            columns=['trip_time', 'round_trip', 'electric', 'member',
-                                     'trip_dist', 'size'])
+    # When weather is implemented column names will need to be included below
+    df_blank = pd.DataFrame(data = np.zeros(shape=(365*24, 6)),
+                            index = idx,
+                            columns = ['trip_time', 'round_trip', 'electric', 'member',
+                                       'trip_dist', 'target'])
+
+    out = pd.concat([df_blank, out]).groupby(['date', 'hour']).agg('sum')
+
+    return out
+
+def grab_weather():
+    '''Loads and preps weather data in a pandas df'''
+    pass
+
+def get_stations(region):
+    '''Returns the set of station names necessary for grouping data
+
+    possible regions: 'downtown', 'lincoln_park', 'wicker_park', 'hyde_park', 'uptown', 'chinatown'
+    '''
+
+    groups = pd.read_csv('models/station_groups.csv')
+
+    return set(groups[groups['group'] == region].name.values)
+
+def vectorize(inputdf):
+    '''Prepares data for machine learning
+
+    input: df from grab_data
+
+    output: 1D numpy array
+      - all non-target feature columns are scaled
+
+    future output: 2D numpy array, scaler used
+      - feature columns would all need to be scaled
+    '''
+
+    # extract target and add to output
+    out = inputdf.groupby(['date', 'hour']).agg('mean')
+
+    out['target'] = inputdf.groupby(['date', 'hour']).size()
+
+    dropcols = ['start_lat', 'start_lng', 'end_lat', 'end_lng']
+
+    out = out.drop(columns=dropcols)
+
+    # Some hours are missing, we want to include a row for that hour with target = 0
+    # Merging with a blank df seems to cover our bases
+    dti = pd.Series(pd.date_range("2020-04-01", freq="D", periods=365)).dt.date
+
+    idx = pd.MultiIndex.from_product([dti, np.arange(24)], names=['date', 'hour'])
+
+    # feature columns would need to be added below
+    df_blank = pd.DataFrame(data = np.zeros(shape=(365*24, 1)), index=idx,
+                            columns=['target'])
 
     out = pd.concat([df_blank, out]).groupby(['date', 'hour']).agg('sum')
 
     out = out.reset_index(drop=True)
 
-    # If you don't want scaled data, use this return line and comment out below it
-    #return np.array(out)
+    # If data is univariate, no need for scaling
+    if out.shape[1] == 1:
+        return out
 
+    # target feature should not be scaled
     y = np.array(out.iloc[:, -1])
 
     scaler = MinMaxScaler()
 
     out = scaler.fit_transform(out.iloc[:, :-1])
 
-    if return_scaler == False:
-      return np.append(out, y.reshape(-1, 1), axis=1)
-    else:
-      return np.append(out, y.reshape(-1, 1), axis=1), scaler
+    return np.append(out, y.reshape(-1, 1), axis=1), scaler
 
-def windowize_data(data, n_prev, univariate=False):
-    '''Function to add a dimension of past data points to a numpy array
-
-    input: 2D np array
-
-    output: 3d np array (where 3D dimension is just copies of previous rows)
-
-    Adapted from a function by Michelle Hoogenhout:
-    https://github.com/michellehoog
+class Model:
     '''
-    n_predictions = len(data) - n_prev
-    indices = np.arange(n_prev) + np.arange(n_predictions)[:, None]
+    Wrapper class for Keras GRU type recurrent neural network.
 
-    if univariate == False:
-        y = data[n_prev:, -1]
-        x = data[indices]
-    else:
-        y = data[n_prev:]
-        x = data[indices, None]
-    return x, y
-
-def split_and_windowize(data, n_prev, fraction_test=0.1, univariate=False):
-    '''Train/test splits data with added timestep dimension
-
-    Adapted from a function by Michelle Hoogenhout:
-    https://github.com/michellehoog
+    Includes architecture and methods to streamline model training.
     '''
-    n_predictions = len(data) - 2*n_prev
+    def __init__(self, df, model=None, univariate=True):
+        '''output of station_data(region, eda=False) should be passed'''
 
-    n_test  = int(fraction_test * n_predictions)
-    n_train = n_predictions - n_test
+        self.df = np.array(df)
 
-    x_train, y_train = windowize_data(data[:n_train], n_prev, univariate=univariate)
-    x_test, y_test = windowize_data(data[n_train:], n_prev, univariate=univariate)
-    return x_train, x_test, y_train, y_test
+        if self.df.shape[1] == 1:
+            self.univariate=False
+        else:
+            self.univariate = univariate
+
+        if self.univariate == True:
+            self.X_train, self.X_test, self.y_train, self.y_test = self.split_and_windowize(self.df[:, -1], 120, 0.0001, univariate=self.univariate)
+        else:
+            self.X_train, self.X_test, self.y_train, self.y_test = self.split_and_windowize(self.df, 120, 0.0001, univariate=self.univariate)
+
+        # a saved keras model will go in here and skip constructing a new one
+        if model is not None:
+            self.model = model
+            return None
+
+        # Model structure, feel free to manipulate but this was the best I found
+        self.model = tf.keras.Sequential()
+        self.model.add(tf.keras.layers.GRU(100, return_sequences=False))
+        self.model.add(tf.keras.layers.Dropout(0.3))
+        self.model.add(tf.keras.layers.Dense(1, activation='relu'))
+        self.model.compile(optimizer='rmsprop', loss='mse')
+
+    def windowize_data(self, data, n_prev, univariate=True):
+        '''Function to add a dimension of past data points to a numpy array
+
+        input: 2D np array
+
+        output: 3d np array (where 3D dimension is just copies of previous rows)
+
+        Adapted from code by Michelle Hoogenhout:
+        https://github.com/michellehoog
+        '''
+        n_predictions = len(data) - n_prev
+        indices = np.arange(n_prev) + np.arange(n_predictions)[:, None]
+
+        if univariate == False:
+            y = data[n_prev:, -1]
+            x = data[indices]
+        else:
+            y = data[n_prev:]
+            x = data[indices, None]
+        return x, y
+
+    def split_and_windowize(self, data, n_prev, fraction_test=0.1, univariate=True):
+        '''Train/test splits data with added timestep dimension
+
+        Adapted from code by Michelle Hoogenhout:
+        https://github.com/michellehoog
+        '''
+        n_predictions = len(data) - 2*n_prev
+
+        n_test  = int(fraction_test * n_predictions)
+        n_train = n_predictions - n_test
+
+        x_train, y_train = self.windowize_data(data[:n_train], n_prev, univariate=univariate)
+        x_test, y_test = self.windowize_data(data[n_train:], n_prev, univariate=univariate)
+        return x_train, x_test, y_train, y_test
+
+    def train(self):
+        # Again feel free to change hyperparameters
+        self.model.fit(self.X_train, self.y_train, batch_size=16, epochs=50)
+
+    def predict(self, X_test=None):
+        # returns predicted target for n hours
+        # can input your own X_test if you want
+        if X_test is None:
+            return self.model.predict(self.X_test)
+        else:
+            return self.model.predict(X_test)
+
+    def predict_plot(self, X_test=None):
+        '''Makes two plots: target predictions and their residuals'''
+        if X_test is None:
+            X_test = self.X_test
+
+        yhat = self.predict(X_test)
+
+        if len(yhat) != len(self.y_test):
+            print('shape mismatch in plotting function')
+
+        # Two long graphs where the bottom is half the height of the top
+        fig, (ax1, ax2) = plt.subplots(2, figsize=(12,7), gridspec_kw={'height_ratios': [2, 1]})
+
+        ax1.plot(np.arange(len(self.y_test)), self.y_test, c='darkslategrey', label='actual')
+        ax1.plot(np.arange(len(self.y_test)), yhat, c='orangered', label='predicted')
+        ax1.set_ylabel('Trips in & out')
+        ax1.title.set_text('Traffic predictions')
+        ax1.set_xticklabels([])
+        ax1.legend()
+
+        ax2.plot(np.arange(len(self.y_test)), (self.y_test - yhat.reshape(len(yhat))), c='orangered')
+        ax2.axhline(c='darkslategrey')
+        ax2.set_xlabel('Hours')
+        ax2.set_ylabel('Trip Error')
+        ax2.title.set_text('Error between Actual and Predicted Traffic');
+
+    def predict_score(self, X_test=None):
+        '''A quick evaluation of how the model did on its prediction'''
+        if X_test is None:
+            X_test = self.X_test
+
+        if self.univariate == True:
+            ybase = np.ones(len(self.y_test)) * X_test[:, 0, -1].mean()
+        else:
+            ybase = np.ones(len(self.y_test)) * X_test.mean()
+
+        ybase = mean_squared_error(self.y_test, ybase)**0.5
+
+        yhat = self.predict(X_test)
+
+        yhat = mean_squared_error(self.y_test, yhat)**0.5
+
+        print('This model did {}% better than baseline {}'.format(round((1-yhat/ybase)*100, 2), round(ybase, 2)))
+
+        return yhat
+
+if __name__ == '__main__':
+    # An example of how to use these functions
+
+    # load data
+    ct = station_data('chinatown', eda=False, start_end='start')
+
+    # call the model
+    model_ct = Model(ct)
+
+    # train the model
+    model_ct.train()
+
+    # evaluate the model
+    model_ct.predict_score()
+
+    # visualize the prediction
+    model_ct.predict_plot()
+
+    # save the model (saves as a directory)
+    #model_ct.model.save('models/my_model')

@@ -1,0 +1,360 @@
+name,group
+Buckingham Fountain,downtown
+State St & Harrison St,downtown
+Dusable Harbor,downtown
+Field Blvd & South Water St,downtown
+Wacker Dr & Washington St,downtown
+Aberdeen St & Jackson Blvd,downtown
+Fairbanks Ct & Grand Ave,downtown
+Michigan Ave & Pearson St,downtown
+McClurg Ct & Illinois St,downtown
+Franklin St & Chicago Ave,downtown
+Racine Ave & Congress Pkwy,downtown
+State St & Van Buren St,downtown
+Streeter Dr & Grand Ave,downtown
+Franklin St & Jackson Blvd,downtown
+Dearborn St & Adams St,downtown
+Clark St & Lake St,downtown
+Wabash Ave & Adams St,downtown
+LaSalle St & Adams St,downtown
+Michigan Ave & Washington St,downtown
+State St & Randolph St,downtown
+Michigan Ave & Ida B Wells Dr,downtown
+State St & Kinzie St,downtown
+Larrabee St & Kingsbury St,downtown
+Dearborn St & Monroe St,downtown
+Clark St & Ida B Wells Dr,downtown
+Clark St & Randolph St,downtown
+Michigan Ave & Lake St,downtown
+Wells St & Huron St,downtown
+Ogden Ave & Chicago Ave,downtown
+Desplaines St & Kinzie St,downtown
+Clinton St & Lake St,downtown
+Clinton St & Tilden St,downtown
+Morgan St & Lake St,downtown
+Jefferson St & Monroe St,downtown
+Kingsbury St & Erie St,downtown
+Canal St & Jackson Blvd,downtown
+Lake Shore Dr & Monroe St,downtown
+Clinton St & Madison St,downtown
+Aberdeen St & Monroe St,downtown
+Daley Center Plaza,downtown
+Milwaukee Ave & Grand Ave,downtown
+Eckhart Park,downtown
+Racine Ave & Randolph St,downtown
+Financial Pl & Ida B Wells Dr,downtown
+Millennium Park,downtown
+Clinton St & Washington Blvd,downtown
+Carpenter St & Huron St,downtown
+Desplaines St & Randolph St,downtown
+LaSalle St & Washington St,downtown
+Lake Shore Dr & Ohio St,downtown
+Orleans St & Merchandise Mart Plaza,downtown
+State St & Pearson St,downtown
+Desplaines St & Jackson Blvd,downtown
+900 W Harrison St,downtown
+Dearborn St & Erie St,downtown
+Sedgwick St & Huron St,downtown
+Dearborn St & Van Buren St,downtown
+Aberdeen St & Randolph St,downtown
+Green St & Randolph St,downtown
+LaSalle Dr & Huron St,downtown
+Michigan Ave & 8th St,downtown
+Malcolm X College,downtown
+Ashland Ave & Lake St,downtown
+Ogden Ave & Congress Pkwy,downtown
+Fairbanks St & Superior St,downtown
+Orleans St & Hubbard St,downtown
+Rush St & Hubbard St,downtown
+Clinton St & Jackson Blvd,downtown
+Wood St & Chicago Ave (*),downtown
+Kingsbury St & Kinzie St,downtown
+Peoria St & Jackson Blvd,downtown
+McClurg Ct & Erie St,downtown
+Racine Ave & Washington Blvd (*),downtown
+Loomis St & Jackson Blvd,downtown
+Franklin St & Illinois St,downtown
+Rush St & Superior St,downtown
+Franklin St & Lake St,downtown
+Canal St & Harrison St,downtown
+Mies van der Rohe Way & Chicago Ave,downtown
+Canal St & Madison St,downtown
+Wells St & Polk St,downtown
+LaSalle St & Illinois St,downtown
+Ogden Ave & Race Ave,downtown
+Canal St & Monroe St,downtown
+Canal St & Adams St,downtown
+Wabash Ave & Wacker Pl,downtown
+Columbus Dr & Randolph St,downtown
+Cityfront Plaza Dr & Pioneer Ct,downtown
+Michigan Ave & Madison St,downtown
+Green St & Madison St,downtown
+Wabash Ave & Grand Ave,downtown
+St. Clair St & Erie St,downtown
+Wells St & Hubbard St,downtown
+Damen Ave & Madison St,downtown
+Elizabeth (May) St & Fulton St,downtown
+Sangamon St & Washington Blvd,downtown
+Stetson Ave & South Water St,downtown
+Ashland Ave & Grand Ave,downtown
+LaSalle St & Jackson Blvd,downtown
+Michigan Ave & Jackson Blvd,downtown
+Wood St & Hubbard St,downtown
+Franklin St & Adams St (Temp),downtown
+Franklin St & Monroe St,downtown
+Clark St & Chicago Ave,downtown
+Ada St & Washington Blvd,downtown
+Ashland Ave & Chicago Ave,downtown
+Paulina St & Flournoy St,downtown
+Logan Blvd & Elston Ave,lincoln_park
+Lincoln Ave & Belmont Ave,lincoln_park
+Clark St & Lincoln Ave,lincoln_park
+Wilton Ave & Diversey Pkwy,lincoln_park
+Sedgwick St & Webster Ave,lincoln_park
+Larrabee St & Webster Ave,lincoln_park
+Lincoln Ave & Diversey Pkwy,lincoln_park
+Southport Ave & Wellington Ave,lincoln_park
+Southport Ave & Belmont Ave,lincoln_park
+Leavitt St & Belmont Ave (*),lincoln_park
+Clark St & Wellington Ave,lincoln_park
+Lake Shore Dr & Wellington Ave,lincoln_park
+Larrabee St & Armitage Ave,lincoln_park
+Lincoln Park Conservatory,lincoln_park
+Damen Ave & Wellington Ave,lincoln_park
+Damen Ave & Clybourn Ave,lincoln_park
+Cannon Dr & Fullerton Ave,lincoln_park
+Ashland Ave & Wrightwood Ave,lincoln_park
+Broadway & Belmont Ave,lincoln_park
+Broadway & Barry Ave,lincoln_park
+Sheffield Ave & Wrightwood Ave,lincoln_park
+Theater on the Lake,lincoln_park
+Southport Ave & Clybourn Ave,lincoln_park
+Leavitt St & Armitage Ave,lincoln_park
+Damen Ave & Charleston St,lincoln_park
+Lakeview Ave & Fullerton Pkwy,lincoln_park
+Marshfield Ave & Cortland St,lincoln_park
+Greenview Ave & Fullerton Ave,lincoln_park
+Southport Ave & Wrightwood Ave,lincoln_park
+Greenview Ave & Diversey Pkwy,lincoln_park
+Sheffield Ave & Fullerton Ave,lincoln_park
+Stockton Dr & Wrightwood Ave,lincoln_park
+Sheffield Ave & Webster Ave,lincoln_park
+Lake Shore Dr & Diversey Pkwy,lincoln_park
+Burling St (Halsted) & Diversey Pkwy (Temp),lincoln_park
+Lake Shore Dr & Belmont Ave,lincoln_park
+Clark St & Wrightwood Ave,lincoln_park
+Racine Ave & Fullerton Ave,lincoln_park
+Racine Ave & Wrightwood Ave,lincoln_park
+Damen Ave & Cortland St,lincoln_park
+Clark St & Drummond Pl,lincoln_park
+Halsted St & Wrightwood Ave,lincoln_park
+Clark St & Armitage Ave,lincoln_park
+Clifton Ave & Armitage Ave,lincoln_park
+Halsted St & Dickens Ave,lincoln_park
+Racine Ave & Belmont Ave,lincoln_park
+Damen Ave & Melrose Ave,lincoln_park
+Bissell St & Armitage Ave,lincoln_park
+Sheffield Ave & Wellington Ave,lincoln_park
+Wilton Ave & Belmont Ave,lincoln_park
+Campbell Ave & Fullerton Ave,lincoln_park
+Winchester Ave & Elston Ave,lincoln_park
+Ashland Ave & Wellington Ave,lincoln_park
+Lincoln Ave & Fullerton Ave,lincoln_park
+Damen Ave & Chicago Ave,wicker_park
+Central Park Ave & Bloomingdale Ave,wicker_park
+Damen Ave & Division St,wicker_park
+Smith Park (*),wicker_park
+Wood St & Chicago Ave (*),wicker_park
+Paulina Ave & North Ave,wicker_park
+Honore St & Division St,wicker_park
+Wood St & Augusta Blvd,wicker_park
+Leavitt St & Chicago Ave,wicker_park
+California Ave & North Ave,wicker_park
+Sheffield Ave & Kingsbury St,wicker_park
+Leavitt St & Division St (*),wicker_park
+Cherry Ave & Blackhawk St,wicker_park
+Noble St & Milwaukee Ave,wicker_park
+Milwaukee Ave & Wabansia Ave,wicker_park
+Ashland Ave & Augusta Blvd,wicker_park
+Claremont Ave & Hirsch St,wicker_park
+Campbell Ave & North Ave,wicker_park
+Western Ave & Division St,wicker_park
+Ogden Ave & Chicago Ave,wicker_park
+Damen Ave & Thomas St (Augusta Blvd),wicker_park
+Marshfield Ave & Cortland St,wicker_park
+Elston Ave & Wabansia Ave,wicker_park
+Dayton St & North Ave,wicker_park
+Wood St & Milwaukee Ave,wicker_park
+Damen Ave & Pierce Ave,wicker_park
+Halsted St & Clybourn Ave,wicker_park
+Ashland Ave & Blackhawk St,wicker_park
+Ashland Ave & Division St,wicker_park
+Leavitt St & North Ave,wicker_park
+Eckhart Park,wicker_park
+California Ave & Division St,wicker_park
+Damen Ave & Cortland St,wicker_park
+Carpenter St & Huron St,wicker_park
+Sheffield Ave & Willow St,wicker_park
+Ashland Ave & Chicago Ave,wicker_park
+Halsted St & Willow St,wicker_park
+Halsted St & North Branch St,wicker_park
+California Ave & Cortez St,wicker_park
+Walsh Park,wicker_park
+Kedzie Ave & Chicago Ave,wicker_park
+Western Ave & Walton St,wicker_park
+Western Ave & Winnebago Ave,wicker_park
+Spaulding Ave & Armitage Ave,wicker_park
+Central Park Ave & North Ave,wicker_park
+Troy St & North Ave,wicker_park
+Spaulding Ave & Division St,wicker_park
+Albany Ave & Bloomingdale Ave,wicker_park
+Halsted St & 51st St,hyde_park
+Princeton Ave & Garfield Blvd,hyde_park
+Halsted St & 56th St,hyde_park
+State St & 54th St,hyde_park
+Halsted St & 63rd St,hyde_park
+Wentworth Ave & 63rd St,hyde_park
+Halsted St & 69th St,hyde_park
+Perry Ave & 69th St,hyde_park
+Calumet Ave & 71st St,hyde_park
+Elizabeth St & 59th St,hyde_park
+Jeffery Blvd & 71st St,hyde_park
+South Shore Dr & 71st St,hyde_park
+Rhodes Ave & 71st St,hyde_park
+Rainbow Beach,hyde_park
+Cornell Dr & Hayes Dr,hyde_park
+Jeffery Blvd & 76th St,hyde_park
+Cottage Grove Ave & 71st St,hyde_park
+South Shore Dr & 74th St,hyde_park
+Yates Blvd & 75th St,hyde_park
+Ashland Ave & 63rd St,hyde_park
+Stony Island Ave & 75th St,hyde_park
+Calumet Ave & 51st St,hyde_park
+Cornell Ave & Hyde Park Blvd,hyde_park
+Ellis Ave & 53rd St,hyde_park
+Lake Park Ave & 53rd St,hyde_park
+Ellis Ave & 55th St,hyde_park
+MLK Jr Dr & 56th St,hyde_park
+DuSable Museum,hyde_park
+University Ave & 57th St,hyde_park
+Museum of Science and Industry,hyde_park
+Harper Ave & 59th St,hyde_park
+Ellis Ave & 60th St,hyde_park
+Cottage Grove Ave & 63rd St,hyde_park
+Dorchester Ave & 63rd St,hyde_park
+Ashland Ave & 50th St,hyde_park
+Throop St & 52nd St,hyde_park
+Eberhart Ave & 61st St,hyde_park
+Racine Ave & Garfield Blvd,hyde_park
+Damen Ave & 59th St,hyde_park
+Marshfield Ave & 59th St,hyde_park
+Racine Ave & 61st St,hyde_park
+Racine Ave & 65th St,hyde_park
+Ashland Ave & 66th St,hyde_park
+Seeley Ave & Garfield Blvd,hyde_park
+May St & 69th St,hyde_park
+Vincennes Ave & 75th St,hyde_park
+Woodlawn Ave & 75th St,hyde_park
+Evans Ave & 75th St,hyde_park
+Vernon Ave & 75th St,hyde_park
+State St & 76th St,hyde_park
+Carpenter St & 63rd St,hyde_park
+Cottage Grove Ave & 78th St,hyde_park
+Michigan Ave & 71st St,hyde_park
+Kimbark Ave & 53rd St,hyde_park
+Stewart Ave & 63rd St (*),hyde_park
+Eggleston Ave & 69th St (*),hyde_park
+Ellis Ave & 58th St,hyde_park
+Prairie Ave & Garfield Blvd,hyde_park
+Halsted St & 59th St,hyde_park
+Halsted St & 73rd St,hyde_park
+Lake Park Ave & 56th St,hyde_park
+Ashland Ave & Garfield Blvd,hyde_park
+Ashland Ave & 73rd St,hyde_park
+Stony Island Ave & 64th St,hyde_park
+Cottage Grove Ave & 51st St,hyde_park
+Jeffery Blvd & 67th St,hyde_park
+South Shore Dr & 67th St,hyde_park
+Stony Island Ave & 71st St,hyde_park
+63rd St Beach,hyde_park
+Stony Island Ave & 67th St,hyde_park
+Damen Ave & 51st St,hyde_park
+Cottage Grove Ave & 67th St,hyde_park
+MLK Jr Dr & 63rd St,hyde_park
+Shore Dr & 55th St,hyde_park
+Woodlawn Ave & 55th St,hyde_park
+Blackstone Ave & Hyde Park Blvd,hyde_park
+Broadway & Sheridan Rd,uptown
+Southport Ave & Clark St,uptown
+Broadway & Wilson Ave,uptown
+Broadway & Argyle St,uptown
+Paulina St & Montrose Ave,uptown
+Lincoln Ave & Belle Plaine Ave,uptown
+Sheridan Rd & Buena Ave,uptown
+Leavitt St & Lawrence Ave,uptown
+Clarendon Ave & Gordon Ter,uptown
+Ravenswood Ave & Berteau Ave,uptown
+Damen Ave & Sunnyside Ave,uptown
+Southport Ave & Irving Park Rd,uptown
+Sheridan Rd & Lawrence Ave,uptown
+Clark St & Winnemac Ave,uptown
+Clark St & Leland Ave,uptown
+Clark St & Berwyn Ave,uptown
+Damen Ave & Foster Ave,uptown
+Marine Dr & Ainslie St,uptown
+Francisco Ave & Foster Ave,uptown
+Lincoln Ave & Winona St,uptown
+Ravenswood Ave & Lawrence Ave,uptown
+Washtenaw Ave & Lawrence Ave,uptown
+Kedzie Ave & Leland Ave,uptown
+Manor Ave & Leland Ave,uptown
+Rockwell St & Eastwood Ave,uptown
+Albany Ave & Montrose Ave,uptown
+California Ave & Montrose Ave,uptown
+Campbell Ave & Montrose Ave,uptown
+Oakley Ave & Irving Park Rd,uptown
+Sheridan Rd & Montrose Ave,uptown
+Clark St & Montrose Ave,uptown
+Wolcott (Ravenswood) Ave & Montrose Ave,uptown
+Western Ave & Leland Ave,uptown
+Sheridan Rd & Irving Park Rd,uptown
+Damen Ave & Leland Ave,uptown
+Lincoln Ave & Sunnyside Ave,uptown
+Ravenswood Ave & Irving Park Rd,uptown
+Clarendon Ave & Junior Ter,uptown
+Ashland Ave & Belle Plaine Ave,uptown
+Montrose Harbor,uptown
+Clarendon Ave & Leland Ave,uptown
+Winthrop Ave & Lawrence Ave,uptown
+Pine Grove Ave & Irving Park Rd,uptown
+Lakefront Trail & Wilson Ave,uptown
+Wentworth Ave & 24th St (Temp),chinatown
+Burnham Harbor,chinatown
+Halsted St & 21st St,chinatown
+Rhodes Ave & 32nd St,chinatown
+Indiana Ave & 31st St,chinatown
+Shields Ave & 28th Pl,chinatown
+Shields Ave & 31st St,chinatown
+Wentworth Ave & 33rd St,chinatown
+State St & 33rd St,chinatown
+Indiana Ave & 26th St,chinatown
+Lake Park Ave & 35th St,chinatown
+Fort Dearborn Dr & 31st St,chinatown
+Morgan St & 31st St,chinatown
+Calumet Ave & 33rd St,chinatown
+Wabash Ave & Cermak Rd,chinatown
+May St & Cullerton St,chinatown
+State St & 35th St,chinatown
+McCormick Place,chinatown
+State St & 29th St,chinatown
+Halsted St & Archer Ave,chinatown
+Emerald Ave & 28th St,chinatown
+Calumet Ave & 35th St,chinatown
+Normal Ave & Archer Ave,chinatown
+Laflin St & Cullerton St,chinatown
+Emerald Ave & 31st St,chinatown
+MLK Jr Dr & 29th St,chinatown
+Loomis St & Archer Ave,chinatown
+Ashland Ave & Archer Ave,chinatown
+Calumet Ave & 21st St,chinatown
+Wentworth Ave & Cermak Rd (Temp),chinatown
