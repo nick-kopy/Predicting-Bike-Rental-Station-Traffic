@@ -25,13 +25,18 @@ def basic_dist(row):
 
     return geodesic(a, b).km * 1000
 
-def station_data(region, eda=False, start_end=None):
+def station_data(region, eda=False, start_end=None, exclude_within_region=False):
     '''Loads, preps, and filters data for machine learning
 
     input: a set of strings, all station names
 
     output: pd dataframe of recent Divvy trips
       - Output is not quite AI ready or EDA ready, but right where they would branch
+      
+    options:
+      - eda: If True includes extra columns with trip related statistics. Should be excluded for modeling.
+      - start_end: Pick if you want trips that start in a region or end in a region or leave blank for both.
+      - exclude_within_region: If a trip started and ended in say downtown, excludes those trips.
 
     '''
     # grab a set of station names for a given region
@@ -57,14 +62,31 @@ def station_data(region, eda=False, start_end=None):
         lil_df = pd.read_csv(month, usecols=usecols)
 
         # decide weather to look at trips starting and/or ending in our selected region
+        mask_end = (lil_df['end_station_name'].isin(stations))
+        mask_start = (lil_df['start_station_name'].isin(stations))
+        
+        # want trips ending in our region, but may or may not want those starting in our region
         if start_end == 'end':
-            mask = (lil_df['end_station_name'].isin(stations))
-        if start_end == 'start':
-            mask = (lil_df['start_station_name'].isin(stations))
+            if exclude_within_region == False:
+                mask = mask_end
+            elif exclude_within_region == True:
+                mask = mask_end & ~mask_start
+                
+        # want trips starting in our region, but may or may not want those ending in our region
+        elif start_end == 'start':
+            if exclude_within_region == False:
+                mask = mask_start
+            elif exclude_within_region == True:
+                mask = mask_start & ~mask_end
+        
+        # want all trips that started or ended in our region but may or may not want trips that did both
         else:
-            mask1 = (lil_df['end_station_name'].isin(stations))
-            mask2 = (lil_df['start_station_name'].isin(stations))
-            mask = mask1 | mask2
+            if exclude_within_region == False:
+                # started or ended in region
+                mask = mask1 | mask2
+            elif exclude_within_region == True:
+                # started xor ended in region
+                mask = (mask1 & ~mask2) | (~mask1 & mask2)
 
         lil_df = lil_df[mask]
 
