@@ -1,0 +1,11 @@
+ride_id,rideable_type,started_at,ended_at,start_station_name,start_station_id,end_station_name,end_station_id,start_lat,start_lng,end_lat,end_lng,member_casual
+CFA86D4455AA1030,classic_bike,2021-03-16 08:32:30,2021-03-16 08:36:34,Humboldt Blvd & Armitage Ave,15651,Stave St & Armitage Ave,13266,41.91751339399,-87.7018089555,41.917741,-87.691392,casual
+30D9DC61227D1AF3,classic_bike,2021-03-28 01:26:28,2021-03-28 01:36:55,Humboldt Blvd & Armitage Ave,15651,Central Park Ave & Bloomingdale Ave,18017,41.91751339399,-87.7018089555,41.914166,-87.716755,casual
+846D87A15682A284,classic_bike,2021-03-11 21:17:29,2021-03-11 21:33:53,Shields Ave & 28th Pl,15443,Halsted St & 35th St,TA1308000043,41.842733,-87.635491,41.830661,-87.647172,casual
+994D05AA75A168F2,classic_bike,2021-03-11 13:26:42,2021-03-11 13:55:41,Winthrop Ave & Lawrence Ave,TA1308000021,Broadway & Sheridan Rd,13323,41.968812,-87.657659,41.952833,-87.649993,casual
+DF7464FBE92D8308,classic_bike,2021-03-21 09:09:37,2021-03-21 09:27:33,Glenwood Ave & Touhy Ave,525,Chicago Ave & Sheridan Rd,E008,42.012701,-87.666058,42.050491,-87.677821,casual
+CEBA8516FD17F8D8,classic_bike,2021-03-20 11:08:47,2021-03-20 11:29:39,Glenwood Ave & Touhy Ave,525,Chicago Ave & Sheridan Rd,E008,42.012701,-87.666058,42.050491,-87.677821,casual
+297268586B79588B,classic_bike,2021-03-20 14:10:41,2021-03-20 14:22:13,State St & Kinzie St,13050,Lake Shore Dr & North Blvd,LF-005,41.889187,-87.627754,41.911722,-87.626804,member
+F39301858B6077DD,electric_bike,2021-03-23 07:56:51,2021-03-23 08:05:50,Shore Dr & 55th St,TA1308000009,Ellis Ave & 60th St,KA1503000014,41.79522966666666,-87.58082766666666,41.78521816666667,-87.60108283333334,member
+D297F199D875BABE,electric_bike,2021-03-31 15:31:19,2021-03-31 15:35:58,Clinton St & Lake St,13021,Franklin St & Jackson Blvd,TA1305000025,41.885552,-87.6417265,41.877287,-87.63615533333333,member
+36B877141175ED7E,classic_bike,2021-03-11 17:37:37,2021-03-11 17:52:44,Michigan Ave & Lake St,TA1305000011,Racine Ave & Washington Blvd,654,41.886024,-87.624117,41.883073,-87.656952,member

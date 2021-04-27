@@ -1,5 +1,5 @@
 # This file contains all the necessary functions for model.ipynb to run
-# It mostly collects, cleans, and presents data
+# To see examples of how to use these functions, see above mentioned notebook
 # Authored by Nicholas Kopystynsky
 
 import pandas as pd
@@ -49,7 +49,8 @@ def station_data(region, eda=False, start_end=None, exclude_within_region=False)
     filelist = []
     frames = []
 
-    for month in [4,5,6,7,8,9,10,11,12]:
+    # change this back to the full year later
+    for month in [10,11,12]: #[4,5,6,7,8,9,10,11,12]:
         filelist.append('data/2020{:02d}-divvy-tripdata.csv'.format(month))
     for month in [1,2,3]:
         filelist.append('data/2021{:02d}-divvy-tripdata.csv'.format(month))
@@ -83,10 +84,10 @@ def station_data(region, eda=False, start_end=None, exclude_within_region=False)
         else:
             if exclude_within_region == False:
                 # started or ended in region
-                mask = mask1 | mask2
+                mask = mask_start | mask_end
             elif exclude_within_region == True:
                 # started xor ended in region
-                mask = (mask1 & ~mask2) | (~mask1 & mask2)
+                mask = (mask_start & ~mask_end) | (~mask_start & mask_end)
 
         lil_df = lil_df[mask]
 
@@ -355,6 +356,7 @@ class Model:
         ax2.axhline(c='orangered')
         ax2.set_xlabel('Time')
         ax2.set_ylabel('Trip Error')
+        ax2.set_ylim(-100, 100) # remove if doesn't look good
         ax2.title.set_text('Error between Actual and Predicted Traffic');
     
     def predict_score(self, n_out=24, offset=0):
@@ -404,24 +406,3 @@ class Model:
         print('Single 24hr test: {} vs baseline {}'.format(round(rmse_24x1[0], 4), round(rmse_24x1[1], 4)))
         print('Four 6hr tests (averaged): {} vs baseline {}'.format(round(rmse_6x4[0], 4), round(rmse_6x4[1], 4)))
         print('Twenty-four 1hr tests (averaged): {} vs baseline {}'.format(round(rmse_1x24[0], 4), round(rmse_1x24[1], 4)))
-
-if __name__ == '__main__':
-    # An example of how to use these functions
-
-    # load data
-    ct = station_data('chinatown', eda=False, start_end='start')
-
-    # call the model
-    model_ct = Model(ct)
-
-    # train the model
-    model_ct.train()
-
-    # evaluate the model
-    model_ct.predict_score()
-
-    # visualize the prediction
-    model_ct.predict_plot()
-
-    # save the model (saves as a directory)
-    #model_ct.model.save('models/my_model')
