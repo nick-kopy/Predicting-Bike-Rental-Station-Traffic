@@ -36,7 +36,7 @@ def station_data(region, eda=False, start_end=None, exclude_within_region=False)
     options:
       - eda: If True includes extra columns with trip related statistics. Should be excluded for modeling.
       - start_end: Pick if you want trips that start in a region or end in a region or leave blank for both.
-      - exclude_within_region: If a trip started and ended in say downtown, excludes those trips.
+      - exclude_within_region: If a trip started and ended within a region, excludes those trips.
 
     '''
     # grab a set of station names for a given region
@@ -167,7 +167,7 @@ def station_data(region, eda=False, start_end=None, exclude_within_region=False)
     return out
 
 def grab_weather():
-    '''Loads and preps weather data in a pandas df'''
+    '''Future implementation: loads and preps weather data in a pandas df'''
     pass
 
 def get_stations(region):
@@ -268,7 +268,15 @@ class Model:
         self.model.compile(optimizer='rmsprop', loss='mse')
     
     def windowize_data(self, data, n_prev, univariate=True):
-        '''univariate'''
+        '''Function to add a dimension of past data points to a numpy array
+        
+        input: 2D np array
+        
+        output: 3d np array (where 3D dimension is just copies of previous rows)
+        
+        Adapted from code by Michelle Hoogenhout:
+        https://github.com/michellehoog
+        '''
         n_predictions = len(data) - n_prev
         indices = np.arange(n_prev) + np.arange(n_predictions)[:, None]
 
@@ -281,7 +289,11 @@ class Model:
         return x, y
 
     def split_and_windowize(self, data, n_prev, fraction_test=0.1, univariate=True):
-        '''Train/test splits data with added timestep dimension'''
+        '''Train/test splits data with added timestep dimension
+        
+        Adapted from code by Michelle Hoogenhout:
+        https://github.com/michellehoog
+        '''
         n_predictions = len(data) - 2*n_prev
 
         n_test  = int(fraction_test * n_predictions)
@@ -292,10 +304,14 @@ class Model:
         return x_train, x_test, y_train, y_test
 
     def train(self):
+        '''Actually trains the model on the data'''
         self.model.fit(self.X_train, self.y_train, batch_size=16, epochs=50)
     
     def predict(self, n_out=24, offset=0):
-        # needs an input where window comes from a specific date, not self.X_test
+        '''Makes a prediction
+        
+        offset is hours since March 27th, 2021 at 12am
+        '''
 
         # first state of window
         window = self.X_test[0+offset, :, :].reshape([1,-1,1])
@@ -303,7 +319,6 @@ class Model:
         out = []
 
         for _ in range(n_out):
-            # model.model.predict?
             pred = self.model.predict(window)[0][0]
 
             out.append(pred)
@@ -320,6 +335,9 @@ class Model:
         return np.array(out)
 
     def predict_plot(self, n_out=24, offset=0):
+        '''Generates a plot of the prediction against the actual observations.
+        
+        Includes a subplot of the residuals'''
 
         yhat = self.predict(n_out=n_out, offset=offset)
 
@@ -360,6 +378,7 @@ class Model:
         ax2.title.set_text('Error between Actual and Predicted Traffic');
     
     def predict_score(self, n_out=24, offset=0):
+        '''Returns a tuple of model and baseline RMSE scores for a window'''
         
         if self.univariate == True:
             ybase = np.ones(n_out) * self.X_train[(n_out+offset)*-1:-1-offset, 0, -1].mean()
@@ -381,7 +400,10 @@ class Model:
         return yhat, ybase
     
     def rmse_spread(self):
-        '''Gives a couple different views of RMSE to evaluate a model'''
+        '''Gives a couple different views of RMSE to evaluate a model.
+        
+        Mostly used for model validation.
+        '''
         
         rmse_24x1 = self.predict_score(n_out=24, offset=0)
         
