@@ -4,6 +4,8 @@ I made some predictions about how much bike rental traffic there will be in diff
 
 While there typically isn't too much traffic at individual stations, the influx and outflux of bikes to different service regions can have important logistic and business implications. Monitoring or, even better, predicting the movement of bikes around the city is useful!
 
+>Check out the five minute [slide](https://docs.google.com/presentation/d/1q1-8wEhc5NM7hwvC_pcPdODU0MeUuYW5fAwNUWNUK4Y/edit#slide=id.gd11b90b2b9_0_101) version of this repo!
+
 ### Data Source
 
 The Chicago Divvy bike share [data](https://divvy-tripdata.s3.amazonaws.com/index.html)
@@ -89,5 +91,5 @@ Our model did decent, but could definitely be improved upon.
 
 ### Assumptions
 
-- The past year has been something of an anomoly with the pandemic and all. Can we draw meaningful conclusions from all this that wouldn't just fade away as vaccines roll out and business returns to normal? The numbers [seem to say](https://github.com/nick-kopy/Exploration-of-bike-share-programs-post-pandemic) that even though Chicago's bikeshare program did take a hit initially, it bounced back pretty quick. So assuming that these conclunsions and predictions are still relevant despite COVID seems to be a safe assumptions.
+- The past year has been something of an anomaly with the pandemic and all. Can we draw meaningful conclusions from all this that wouldn't just fade away as vaccines roll out and business returns to normal? The numbers [seem to say](https://github.com/nick-kopy/Exploration-of-bike-share-programs-post-pandemic) that even though Chicago's bikeshare program did take a hit initially, it bounced back pretty quick. So assuming that these conclusions and predictions are still relevant despite COVID seems to be a safe assumptions.
 - Station groupings are loosely based on [this map](https://data.cityofchicago.org/Transportation/Divvy-Bicycle-Stations-All-Map/bk89-9dk7) by on the Chicago Data Portal. These are not official groupings of any kind and are actually not restricted to their labels. What I mean is that some Wicker Park stations are actually in West Town but Wicker Park was just an easy name to go with for that "block" on the map. These models would really benefit (and be more applicable to the business) with relevant and sensical groupings.
