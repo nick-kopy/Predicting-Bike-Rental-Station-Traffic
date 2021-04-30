@@ -242,6 +242,9 @@ class Model:
         # offset in hours from midnight (used in predictions)
         self.offset = 6
         
+        # window of time to look back when making a prediction (in hours)
+        self.lookback = 120
+        
         if self.df.shape[1] == 1:
             self.univariate=False
         else:
@@ -252,15 +255,15 @@ class Model:
         self.df = self.scaler.fit_transform(self.df)
         
         if self.univariate == True:
-            self.X_train, self.X_test, self.y_train, self.y_test = self.split_and_windowize(self.df[:, -1], 120, 0.0001, univariate=self.univariate)
+            self.X_train, self.X_test, self.y_train, self.y_test = self.split_and_windowize(self.df[:, -1], self.lookback, 0.0001, univariate=self.univariate)
         else:
-            self.X_train, self.X_test, self.y_train, self.y_test = self.split_and_windowize(self.df, 120, 0.0001, univariate=self.univariate)
+            self.X_train, self.X_test, self.y_train, self.y_test = self.split_and_windowize(self.df, self.lookback, 0.0001, univariate=self.univariate)
 
         if load_model is not None:
             self.model = load_model
             return None    
 
-        # Model structure
+        # Model structure, feel free to make adjustments here
         self.model = tf.keras.Sequential()
         self.model.add(tf.keras.layers.GRU(100, return_sequences=False))
         self.model.add(tf.keras.layers.Dropout(0.2))
@@ -400,7 +403,7 @@ class Model:
         return yhat, ybase
     
     def rmse_spread(self):
-        '''Gives a couple different views of RMSE to evaluate a model.
+        '''Gives a couple different views of RMSE scores to evaluate a model.
         
         Mostly used for model validation.
         '''

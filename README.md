@@ -44,8 +44,8 @@ We can certainly build a better model than this though. There are plenty of opti
 
 Recurrent neural networks are models that can be trained on several months of data and but also have a short term memory that takes into account the most recent information when making predictions. LSTMs (long short term memory) and GRUs (gated recurrent unit) are improved versions that make the most of the memory they have. Let's make a GRU model that can predict what traffic will look like in the next few hours.
 
->To see the GRU RNN models in action check out this [notebook](https://github.com/nick-kopy/Predicting-Bike-Rental-Station-Traffic/blob/main/prediction.ipynb) that mirrors this write up with all the code!
-
+>Building models with complex architecture is an iterative process with trial and error and evaluations at every step. To see the GRU RNN models being built and then deployed in action check out this [notebook](https://github.com/nick-kopy/Predicting-Bike-Rental-Station-Traffic/blob/main/prediction.ipynb) that mirrors this write up with all the code!
+>
 >To REALLY get into the code and look at the GRU architecture, check out the [code file](https://github.com/nick-kopy/Predicting-Bike-Rental-Station-Traffic/blob/main/model_funcs.py) behind all the data cleaning and model processing.
 
 These models were all trained on data from October 2020 until March 2021. There is a model for each of six regions around Chicago but let's stick with downtown because it's the most active and most interesting. During this training the model learning how to take a look at a five day window in the past and predict up to five days into the future. Let's make a simple prediction.
