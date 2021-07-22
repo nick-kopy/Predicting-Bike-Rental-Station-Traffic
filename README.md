@@ -1,3 +1,5 @@
+# Predicting Bike Rental City Traffic
+
 ## Project Overview
 
 I made some predictions about how much bike rental traffic there will be in different areas of Chicago.
